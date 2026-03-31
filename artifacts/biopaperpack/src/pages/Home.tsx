@@ -29,7 +29,6 @@ export default function Home() {
   });
 
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const logoY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
 
@@ -61,43 +60,11 @@ export default function Home() {
           />
         </motion.div>
 
-        {/* Logo as large blended watermark — bottom-right of hero */}
-        <motion.div
-          style={{ y: logoY }}
-          className="absolute bottom-[-80px] right-[-60px] z-0 pointer-events-none select-none w-[460px] md:w-[560px]"
-        >
-          <img
-            src={logoTransparent}
-            alt=""
-            aria-hidden="true"
-            className="w-full h-auto object-contain"
-            style={{
-              opacity: 0.07,
-              mixBlendMode: "multiply",
-              filter: "saturate(0.4) contrast(0.8)",
-            }}
-          />
-          {/* Gradient to fade the bottom of the logo out */}
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
-        </motion.div>
-
         {/* Hero text content */}
         <motion.div
           style={{ opacity: textOpacity, y: textY }}
           className="relative z-10 container mx-auto px-6 md:px-12 pt-36 pb-28"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex items-center gap-4 mb-10"
-          >
-            <div className="h-px w-10 bg-primary/40" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-primary/70">
-              Sustainable Packaging
-            </span>
-          </motion.div>
-
           <motion.div
             initial="hidden"
             animate="visible"
@@ -200,6 +167,49 @@ export default function Home() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── BRAND IDENTITY SHOWCASE ─────────────────────── */}
+      <section className="py-16 px-6 md:px-12 bg-background" data-testid="section-brand">
+        <div className="container mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="border border-border overflow-hidden"
+          >
+            <div className="flex flex-col md:flex-row items-center">
+              {/* Logo block — left/center */}
+              <div className="flex-1 flex items-center justify-center py-16 px-10 md:py-20 md:px-16 bg-[hsl(80,55%,94%)] relative overflow-hidden">
+                {/* Subtle radial glow behind logo */}
+                <div className="absolute inset-0 bg-radial from-[hsl(80,60%,88%)] to-transparent opacity-60 pointer-events-none" />
+                <motion.img
+                  src={logoTransparent}
+                  alt="BioPaperPack"
+                  className="relative z-10 w-56 md:w-72 h-auto object-contain drop-shadow-sm"
+                  initial={{ opacity: 0, scale: 0.92 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                  viewport={{ once: true }}
+                />
+              </div>
+              {/* Divider */}
+              <div className="hidden md:block w-px self-stretch bg-border" />
+              <div className="block md:hidden h-px w-full bg-border" />
+              {/* Brand statement — right */}
+              <div className="flex-1 flex flex-col justify-center py-14 px-10 md:py-20 md:px-16">
+                <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground font-medium mb-5">Our Identity</p>
+                <h3 className="text-2xl md:text-3xl font-serif leading-snug mb-6 text-foreground">
+                  A brand rooted in<br />nature. Built to last.
+                </h3>
+                <p className="text-sm text-muted-foreground font-light leading-relaxed max-w-xs">
+                  BIOPAPERPACK was founded on the belief that premium packaging and environmental stewardship are not in opposition — they are one and the same.
+                </p>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -359,25 +369,10 @@ export default function Home() {
       {/* ── CONTACT / INQUIRY ────────────────────────────── */}
       <section
         id="contact"
-        className="relative py-32 px-6 md:px-12 overflow-hidden"
+        className="py-32 px-6 md:px-12 bg-[hsl(150,36%,13%)]"
         data-testid="section-contact"
       >
-        {/* Background photo */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/contact-bg.png"
-            alt=""
-            aria-hidden="true"
-            className="w-full h-full object-cover"
-          />
-          {/* Dark overlay — ensures text legibility */}
-          <div className="absolute inset-0 bg-[hsl(150,40%,8%)]/88" />
-          {/* Subtle top and bottom gradient to blend with surrounding sections */}
-          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[hsl(150,35%,8%)] to-transparent" />
-        </div>
-
-        <div className="relative z-10 container mx-auto max-w-4xl">
+        <div className="container mx-auto max-w-4xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
