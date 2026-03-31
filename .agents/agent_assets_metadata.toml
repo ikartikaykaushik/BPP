@@ -18,3 +18,9 @@ id = "xgjx4ctvebg-zTCudrKXr"
 uri = "file://artifacts/biopaperpack/public/texture.png"
 type = "image"
 title = "macro corrugated cardboard fluting texture"
+
+[[generated]]
+id = "SpbgwEKQXxZjq28UQlpFy"
+uri = "file://attached_assets/generated_images/generated_image.png"
+type = "image"
+title = "generated_image"

@@ -4,7 +4,7 @@ import { Navigation } from "@/components/Navigation";
 import { ArrowRight, Leaf, ShieldCheck, PenTool, ArrowUpRight, Package, Mail, Phone, MapPin } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import logoSrc from "@assets/MAIN_LOGO_1774952568047.png";
+import logoTransparent from "@assets/MAIN_LOGO-removebg-preview_1774953447415.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -13,10 +13,7 @@ const fadeUp = {
 
 const staggerContainer = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2 }
-  }
+  visible: { opacity: 1, transition: { staggerChildren: 0.18 } }
 };
 
 function smoothScrollTo(id: string) {
@@ -32,34 +29,30 @@ export default function Home() {
   });
 
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
+  const logoY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20 selection:text-primary">
       <Navigation />
 
-      {/* ── HERO ──────────────────────────────────────────────── */}
+      {/* ── HERO ────────────────────────────────────────── */}
       <section
         ref={heroRef}
         className="relative min-h-[100svh] overflow-hidden flex flex-col justify-center"
         data-testid="section-hero"
       >
-        {/* Parallax image — right side */}
+        {/* Parallax photo — right side */}
         <motion.div
           style={{ y: imgY }}
           className="absolute right-0 top-0 w-full md:w-[58vw] h-full z-0"
         >
-          {/* Multi-directional gradient fade so image bleeds into the cream bg */}
           <div className="absolute inset-0 z-10 pointer-events-none">
-            {/* Left fade */}
-            <div className="absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-background via-background/70 to-transparent" />
-            {/* Top fade */}
-            <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-background to-transparent" />
-            {/* Bottom fade — strong, blends bottom edge completely */}
-            <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-background via-background/80 to-transparent" />
-            {/* Right fade on mobile */}
-            <div className="absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background to-transparent" />
+            <div className="absolute inset-y-0 left-0 w-[75%] bg-gradient-to-r from-background via-background/75 to-transparent" />
+            <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-background to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-background via-background/85 to-transparent" />
+            <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent" />
           </div>
           <img
             src="/hero-box.png"
@@ -68,21 +61,39 @@ export default function Home() {
           />
         </motion.div>
 
-        {/* Text content */}
+        {/* Logo as large blended watermark — bottom-right of hero */}
+        <motion.div
+          style={{ y: logoY }}
+          className="absolute bottom-[-80px] right-[-60px] z-0 pointer-events-none select-none w-[460px] md:w-[560px]"
+        >
+          <img
+            src={logoTransparent}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-auto object-contain"
+            style={{
+              opacity: 0.07,
+              mixBlendMode: "multiply",
+              filter: "saturate(0.4) contrast(0.8)",
+            }}
+          />
+          {/* Gradient to fade the bottom of the logo out */}
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
+        </motion.div>
+
+        {/* Hero text content */}
         <motion.div
           style={{ opacity: textOpacity, y: textY }}
-          className="relative z-10 container mx-auto px-6 md:px-12 pt-32 pb-24"
+          className="relative z-10 container mx-auto px-6 md:px-12 pt-36 pb-28"
         >
-          {/* Brand badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
             className="flex items-center gap-4 mb-10"
           >
-            <img src={logoSrc} alt="BioPaperPack" className="h-16 w-auto object-contain drop-shadow-md" />
-            <div className="h-px w-12 bg-primary/40" />
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-primary/70">
+            <div className="h-px w-10 bg-primary/40" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-primary/70">
               Sustainable Packaging
             </span>
           </motion.div>
@@ -95,13 +106,13 @@ export default function Home() {
           >
             <motion.p
               variants={fadeUp}
-              className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-medium mb-5"
+              className="text-[11px] uppercase tracking-[0.35em] text-foreground/40 font-medium mb-5"
             >
               BIOPAPERPACK
             </motion.p>
             <motion.h1
               variants={fadeUp}
-              className="text-5xl md:text-7xl lg:text-8xl font-serif text-balance leading-[1.04] text-foreground"
+              className="text-6xl md:text-7xl lg:text-[90px] font-serif text-balance leading-[1.02] text-foreground"
             >
               Precision <br />Meets Nature.
             </motion.h1>
@@ -115,14 +126,14 @@ export default function Home() {
             <motion.div variants={fadeUp} className="mt-12 flex items-center gap-8">
               <button
                 onClick={() => smoothScrollTo("products")}
-                className="inline-flex items-center gap-3 border-b border-foreground pb-2 text-xs uppercase tracking-widest hover:text-primary hover:border-primary transition-colors duration-300"
+                className="inline-flex items-center gap-3 border-b border-foreground pb-2 text-[11px] uppercase tracking-widest hover:text-primary hover:border-primary transition-colors duration-300"
                 data-testid="hero-explore"
               >
                 Explore Solutions <ArrowRight className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => smoothScrollTo("contact")}
-                className="text-xs uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors duration-300"
+                className="text-[11px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors duration-300"
                 data-testid="hero-contact"
               >
                 Get a Quote
@@ -131,46 +142,22 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        {/* Bottom brand strip */}
+        {/* Bottom strip */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
+          transition={{ delay: 1.3, duration: 0.8 }}
           className="absolute bottom-6 left-0 right-0 z-10 container mx-auto px-6 md:px-12 flex items-center justify-between"
         >
-          <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/60 font-medium">
-            Est. in India
-          </span>
+          <span className="text-[10px] uppercase tracking-[0.3em] text-foreground/30 font-medium">Est. in India</span>
           <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-pulse" />
-            <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60">Manufacturing Excellence</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-primary/50 animate-pulse" />
+            <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/30">Manufacturing Excellence</span>
           </div>
         </motion.div>
       </section>
 
-      {/* ── BRAND MARQUEE STRIP ───────────────────────────────── */}
-      <div className="bg-primary text-primary-foreground py-3 overflow-hidden whitespace-nowrap">
-        <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="inline-flex gap-12 text-[11px] uppercase tracking-[0.25em] font-medium"
-        >
-          {Array.from({ length: 8 }).map((_, i) => (
-            <span key={i} className="inline-flex items-center gap-12 opacity-90">
-              <span>BIOPAPERPACK</span>
-              <span className="opacity-40">·</span>
-              <span>3-Ply · 5-Ply · 7-Ply</span>
-              <span className="opacity-40">·</span>
-              <span>Custom Printing</span>
-              <span className="opacity-40">·</span>
-              <span>Sustainable Manufacturing</span>
-              <span className="opacity-40">·</span>
-            </span>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* ── ETHOS / ABOUT ─────────────────────────────────────── */}
+      {/* ── ETHOS / ABOUT ───────────────────────────────── */}
       <section id="about" className="py-32 px-6 md:px-12 bg-foreground text-background" data-testid="section-about">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -180,14 +167,14 @@ export default function Home() {
               viewport={{ once: true, margin: "-100px" }}
               variants={staggerContainer}
             >
-              <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6">
+              <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.3em] text-primary font-medium mb-6">
                 Our Ethos
               </motion.p>
               <motion.h3 variants={fadeUp} className="text-3xl md:text-5xl font-serif leading-tight">
                 We craft eco-conscious packaging for brands that refuse to compromise.
               </motion.h3>
-              <motion.p variants={fadeUp} className="mt-8 text-background/60 text-base font-light max-w-md leading-relaxed">
-                Every box we manufacture is a testament to quality and sustainability. From lightweight retail shippers to heavy-duty industrial cargo protection, we deliver exact specifications with a minimal environmental footprint.
+              <motion.p variants={fadeUp} className="mt-8 text-background/55 text-base font-light max-w-md leading-relaxed">
+                Every box we manufacture is a testament to quality and sustainability. From lightweight retail shippers to heavy-duty industrial cargo protection — exact specifications, minimal footprint.
               </motion.p>
             </motion.div>
 
@@ -208,7 +195,7 @@ export default function Home() {
                 >
                   <item.icon className="w-5 h-5 text-primary mb-4" />
                   <h4 className="text-base font-medium mb-2">{item.title}</h4>
-                  <p className="text-xs text-background/50 leading-relaxed">{item.desc}</p>
+                  <p className="text-xs text-background/45 leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -216,7 +203,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── PRODUCTS ──────────────────────────────────────────── */}
+      {/* ── PRODUCTS ────────────────────────────────────── */}
       <section id="products" className="py-32 px-6 md:px-12" data-testid="section-products">
         <div className="container mx-auto">
           <motion.div
@@ -227,7 +214,7 @@ export default function Home() {
             className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8"
           >
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-medium mb-4">Engineering</p>
+              <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground font-medium mb-4">Engineering</p>
               <h3 className="text-4xl md:text-6xl font-serif">Structural Integrity.</h3>
             </div>
             <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
@@ -237,27 +224,9 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
             {[
-              {
-                ply: "3-Ply",
-                title: "Lightweight",
-                subtitle: "Retail & Consumer",
-                desc: "Ideal for retail packaging, light shipping, and subscription boxes. Excellent printability and presentation.",
-                weight: "Light-duty",
-              },
-              {
-                ply: "5-Ply",
-                title: "Industrial",
-                subtitle: "Medium-Duty Shipping",
-                desc: "Double-wall construction providing enhanced structural support. Versatile for e-commerce and industrial distribution.",
-                weight: "Medium-duty",
-              },
-              {
-                ply: "7-Ply",
-                title: "Maximum",
-                subtitle: "Heavy Cargo & Export",
-                desc: "Triple-wall maximum protection. Engineered for heavy machinery, fragile exports, and rigorous international routes.",
-                weight: "Heavy-duty",
-              }
+              { ply: "3-Ply", title: "Lightweight", subtitle: "Retail & Consumer", desc: "Ideal for retail packaging, light shipping, and subscription boxes. Excellent printability and presentation.", weight: "Light-duty" },
+              { ply: "5-Ply", title: "Industrial", subtitle: "Medium-Duty Shipping", desc: "Double-wall construction providing enhanced structural support. Versatile for e-commerce and industrial distribution.", weight: "Medium-duty" },
+              { ply: "7-Ply", title: "Maximum", subtitle: "Heavy Cargo & Export", desc: "Triple-wall maximum protection. Engineered for heavy machinery, fragile exports, and rigorous international routes.", weight: "Heavy-duty" }
             ].map((product, i) => (
               <motion.div
                 key={i}
@@ -270,15 +239,11 @@ export default function Home() {
               >
                 <div>
                   <div className="flex items-center justify-between mb-12">
-                    <span className="text-xs uppercase tracking-widest text-muted-foreground group-hover:text-background/50 transition-colors">
-                      {product.weight}
-                    </span>
-                    <span className="font-serif text-4xl text-primary group-hover:text-primary transition-colors">
-                      {product.ply}
-                    </span>
+                    <span className="text-[10px] uppercase tracking-widest text-muted-foreground group-hover:text-background/40 transition-colors">{product.weight}</span>
+                    <span className="font-serif text-4xl text-primary transition-colors">{product.ply}</span>
                   </div>
                   <h4 className="text-2xl md:text-3xl font-serif mb-2">{product.title}</h4>
-                  <p className="text-xs uppercase tracking-widest text-muted-foreground group-hover:text-background/50 mb-6 transition-colors">{product.subtitle}</p>
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground group-hover:text-background/40 mb-6 transition-colors">{product.subtitle}</p>
                   <p className="text-sm opacity-70 leading-relaxed">{product.desc}</p>
                 </div>
                 <div className="mt-8 flex justify-end">
@@ -303,7 +268,7 @@ export default function Home() {
             </div>
             <button
               onClick={() => smoothScrollTo("contact")}
-              className="shrink-0 px-8 py-4 bg-foreground text-background text-xs uppercase tracking-widest hover:bg-primary transition-colors duration-300 whitespace-nowrap"
+              className="shrink-0 px-8 py-4 bg-foreground text-background text-[11px] uppercase tracking-widest hover:bg-primary transition-colors duration-300 whitespace-nowrap"
               data-testid="product-request-specs"
             >
               Request Specs
@@ -312,7 +277,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── IMAGE BREAK ───────────────────────────────────────── */}
+      {/* ── IMAGE BREAK ─────────────────────────────────── */}
       <section className="relative h-[60vh] w-full overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent z-10" />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
@@ -327,80 +292,89 @@ export default function Home() {
         />
       </section>
 
-      {/* ── SUSTAINABILITY ────────────────────────────────────── */}
+      {/* ── SUSTAINABILITY ───────────────────────────────── */}
       <section id="sustainability" className="py-32 px-6 md:px-12" data-testid="section-sustainability">
         <div className="container mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              className="lg:col-span-5"
-            >
-              <div className="aspect-[3/4] overflow-hidden bg-muted/30">
-                <img
-                  src="/texture.png"
-                  alt="Corrugated Texture"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </motion.div>
+          {/* Logo watermark placed subtly here in sustainability section */}
+          <div className="relative">
+            <div className="absolute -top-16 -right-20 w-[380px] pointer-events-none select-none opacity-[0.045]" aria-hidden="true">
+              <img
+                src={logoTransparent}
+                alt=""
+                className="w-full h-auto object-contain"
+                style={{ mixBlendMode: "multiply", filter: "saturate(0.3)" }}
+              />
+            </div>
 
-            <div className="lg:col-span-7 lg:pl-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                variants={staggerContainer}
+                variants={fadeUp}
+                className="lg:col-span-5"
               >
-                <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6">
-                  Environmental Commitment
-                </motion.p>
-                <motion.h3 variants={fadeUp} className="text-4xl md:text-6xl font-serif mb-8 leading-tight">
-                  Designed for the circular economy.
-                </motion.h3>
-                <motion.p variants={fadeUp} className="text-base text-muted-foreground font-light mb-12 leading-relaxed">
-                  At BIOPAPERPACK, sustainability is the foundation of our engineering. We utilize water-based inks, high post-consumer recycled content, and strict waste-reduction manufacturing protocols. Our boxes return to the earth as cleanly as they came from it.
-                </motion.p>
-
-                <div className="grid grid-cols-2 gap-8 border-t border-border pt-12">
-                  {[
-                    { num: "100%", label: "Recyclable Materials" },
-                    { num: "0", label: "Harmful Toxins" },
-                    { num: "FSC", label: "Certified Sourcing" },
-                    { num: "H₂O", label: "Based Inks Only" },
-                  ].map((stat, i) => (
-                    <motion.div key={i} variants={fadeUp}>
-                      <div className="text-4xl md:text-5xl font-serif text-foreground mb-2">{stat.num}</div>
-                      <div className="text-xs text-muted-foreground uppercase tracking-widest">{stat.label}</div>
-                    </motion.div>
-                  ))}
+                <div className="aspect-[3/4] overflow-hidden bg-muted/30">
+                  <img src="/texture.png" alt="Corrugated Texture" className="w-full h-full object-cover" />
                 </div>
               </motion.div>
+
+              <div className="lg:col-span-7 lg:pl-8">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={staggerContainer}
+                >
+                  <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.3em] text-primary font-medium mb-6">
+                    Environmental Commitment
+                  </motion.p>
+                  <motion.h3 variants={fadeUp} className="text-4xl md:text-6xl font-serif mb-8 leading-tight">
+                    Designed for the circular economy.
+                  </motion.h3>
+                  <motion.p variants={fadeUp} className="text-base text-muted-foreground font-light mb-12 leading-relaxed">
+                    At BIOPAPERPACK, sustainability is the foundation of our engineering. We utilize water-based inks, high post-consumer recycled content, and strict waste-reduction manufacturing protocols. Our boxes return to the earth as cleanly as they came from it.
+                  </motion.p>
+
+                  <div className="grid grid-cols-2 gap-8 border-t border-border pt-12">
+                    {[
+                      { num: "100%", label: "Recyclable Materials" },
+                      { num: "0", label: "Harmful Toxins" },
+                      { num: "FSC", label: "Certified Sourcing" },
+                      { num: "H₂O", label: "Based Inks Only" },
+                    ].map((stat, i) => (
+                      <motion.div key={i} variants={fadeUp}>
+                        <div className="text-4xl md:text-5xl font-serif text-foreground mb-2">{stat.num}</div>
+                        <div className="text-[11px] text-muted-foreground uppercase tracking-widest">{stat.label}</div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── CONTACT / INQUIRY ─────────────────────────────────── */}
+      {/* ── CONTACT / INQUIRY ────────────────────────────── */}
       <section
         id="contact"
         className="relative py-32 px-6 md:px-12 overflow-hidden"
         data-testid="section-contact"
       >
-        {/* Rich green eco background */}
-        <div className="absolute inset-0 bg-[hsl(150,35%,14%)]" />
-        {/* Subtle texture overlay */}
-        <div className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 40px, hsl(75,60%,80%) 40px, hsl(75,60%,80%) 41px),
-                              repeating-linear-gradient(90deg, transparent, transparent 40px, hsl(75,60%,80%) 40px, hsl(75,60%,80%) 41px)`
-          }}
-        />
-        {/* Logo watermark */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 opacity-[0.06] pointer-events-none select-none">
-          <img src={logoSrc} alt="" className="w-[500px] h-auto" />
+        {/* Background photo */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/contact-bg.png"
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover"
+          />
+          {/* Dark overlay — ensures text legibility */}
+          <div className="absolute inset-0 bg-[hsl(150,40%,8%)]/88" />
+          {/* Subtle top and bottom gradient to blend with surrounding sections */}
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[hsl(150,35%,8%)] to-transparent" />
         </div>
 
         <div className="relative z-10 container mx-auto max-w-4xl">
@@ -411,13 +385,13 @@ export default function Home() {
             variants={staggerContainer}
             className="mb-14"
           >
-            <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.3em] text-[hsl(75,60%,65%)] font-medium mb-4">
+            <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.3em] text-[hsl(75,60%,65%)] font-medium mb-4">
               Get in Touch
             </motion.p>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-6xl font-serif text-[hsl(45,40%,95%)] leading-tight mb-6">
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-6xl font-serif text-[hsl(45,40%,96%)] leading-tight mb-6">
               Start a Conversation.
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-[hsl(150,20%,60%)] text-base font-light max-w-lg leading-relaxed">
+            <motion.p variants={fadeUp} className="text-[hsl(150,15%,68%)] text-base font-light max-w-lg leading-relaxed">
               Request a quote, discuss custom dimensions, or inquire about our manufacturing capacity. We respond within 24 hours.
             </motion.p>
           </motion.div>
@@ -435,12 +409,12 @@ export default function Home() {
               { icon: MapPin, label: "Location", value: "India" },
             ].map((info, i) => (
               <motion.div key={i} variants={fadeUp} className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full border border-[hsl(75,60%,65%)]/30 flex items-center justify-center shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-full border border-[hsl(75,60%,65%)]/25 flex items-center justify-center shrink-0 mt-0.5">
                   <info.icon className="w-3.5 h-3.5 text-[hsl(75,60%,65%)]" />
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-widest text-[hsl(150,20%,50%)] mb-1">{info.label}</p>
-                  <p className="text-sm text-[hsl(45,40%,85%)] font-light">{info.value}</p>
+                  <p className="text-[10px] uppercase tracking-widest text-[hsl(150,15%,48%)] mb-1">{info.label}</p>
+                  <p className="text-sm text-[hsl(45,30%,80%)] font-light">{info.value}</p>
                 </div>
               </motion.div>
             ))}
@@ -456,18 +430,18 @@ export default function Home() {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest text-[hsl(150,20%,55%)]">Name</label>
+                <label className="text-[10px] uppercase tracking-widest text-[hsl(150,15%,55%)]">Name</label>
                 <Input
-                  className="border-0 border-b border-[hsl(150,20%,30%)] bg-transparent rounded-none px-0 py-2 focus-visible:ring-0 focus-visible:border-[hsl(75,60%,65%)] text-[hsl(45,40%,90%)] placeholder:text-[hsl(150,20%,35%)] transition-colors"
+                  className="border-0 border-b border-[hsl(150,15%,28%)] bg-transparent rounded-none px-0 py-2 focus-visible:ring-0 focus-visible:border-[hsl(75,60%,65%)] text-[hsl(45,35%,90%)] placeholder:text-[hsl(150,15%,33%)] transition-colors"
                   placeholder="Jane Doe"
                   data-testid="input-name"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest text-[hsl(150,20%,55%)]">Email</label>
+                <label className="text-[10px] uppercase tracking-widest text-[hsl(150,15%,55%)]">Email</label>
                 <Input
                   type="email"
-                  className="border-0 border-b border-[hsl(150,20%,30%)] bg-transparent rounded-none px-0 py-2 focus-visible:ring-0 focus-visible:border-[hsl(75,60%,65%)] text-[hsl(45,40%,90%)] placeholder:text-[hsl(150,20%,35%)] transition-colors"
+                  className="border-0 border-b border-[hsl(150,15%,28%)] bg-transparent rounded-none px-0 py-2 focus-visible:ring-0 focus-visible:border-[hsl(75,60%,65%)] text-[hsl(45,35%,90%)] placeholder:text-[hsl(150,15%,33%)] transition-colors"
                   placeholder="jane@company.com"
                   data-testid="input-email"
                 />
@@ -475,32 +449,32 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest text-[hsl(150,20%,55%)]">Company</label>
+                <label className="text-[10px] uppercase tracking-widest text-[hsl(150,15%,55%)]">Company</label>
                 <Input
-                  className="border-0 border-b border-[hsl(150,20%,30%)] bg-transparent rounded-none px-0 py-2 focus-visible:ring-0 focus-visible:border-[hsl(75,60%,65%)] text-[hsl(45,40%,90%)] placeholder:text-[hsl(150,20%,35%)] transition-colors"
+                  className="border-0 border-b border-[hsl(150,15%,28%)] bg-transparent rounded-none px-0 py-2 focus-visible:ring-0 focus-visible:border-[hsl(75,60%,65%)] text-[hsl(45,35%,90%)] placeholder:text-[hsl(150,15%,33%)] transition-colors"
                   placeholder="Your Brand Ltd."
                   data-testid="input-company"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest text-[hsl(150,20%,55%)]">Product Interest</label>
+                <label className="text-[10px] uppercase tracking-widest text-[hsl(150,15%,55%)]">Product Interest</label>
                 <select
-                  className="w-full h-10 border-0 border-b border-[hsl(150,20%,30%)] bg-transparent px-0 focus:outline-none focus:border-[hsl(75,60%,65%)] appearance-none text-sm text-[hsl(45,40%,80%)] transition-colors"
+                  className="w-full h-10 border-0 border-b border-[hsl(150,15%,28%)] bg-transparent px-0 focus:outline-none focus:border-[hsl(75,60%,65%)] appearance-none text-sm text-[hsl(45,30%,78%)] transition-colors cursor-pointer"
                   defaultValue=""
                   data-testid="select-product"
                 >
-                  <option value="" disabled className="bg-[hsl(150,35%,14%)]">Select an option</option>
-                  <option className="bg-[hsl(150,35%,14%)]">3-Ply Solutions</option>
-                  <option className="bg-[hsl(150,35%,14%)]">5-Ply Solutions</option>
-                  <option className="bg-[hsl(150,35%,14%)]">7-Ply Solutions</option>
-                  <option className="bg-[hsl(150,35%,14%)]">Custom / Undecided</option>
+                  <option value="" disabled style={{ background: "hsl(150,40%,10%)" }}>Select an option</option>
+                  <option style={{ background: "hsl(150,40%,10%)" }}>3-Ply Solutions</option>
+                  <option style={{ background: "hsl(150,40%,10%)" }}>5-Ply Solutions</option>
+                  <option style={{ background: "hsl(150,40%,10%)" }}>7-Ply Solutions</option>
+                  <option style={{ background: "hsl(150,40%,10%)" }}>Custom / Undecided</option>
                 </select>
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] uppercase tracking-widest text-[hsl(150,20%,55%)]">Message / Specifications</label>
+              <label className="text-[10px] uppercase tracking-widest text-[hsl(150,15%,55%)]">Message / Specifications</label>
               <Textarea
-                className="border-0 border-b border-[hsl(150,20%,30%)] bg-transparent rounded-none px-0 py-2 focus-visible:ring-0 focus-visible:border-[hsl(75,60%,65%)] text-[hsl(45,40%,90%)] placeholder:text-[hsl(150,20%,35%)] min-h-[100px] resize-none transition-colors"
+                className="border-0 border-b border-[hsl(150,15%,28%)] bg-transparent rounded-none px-0 py-2 focus-visible:ring-0 focus-visible:border-[hsl(75,60%,65%)] text-[hsl(45,35%,90%)] placeholder:text-[hsl(150,15%,33%)] min-h-[100px] resize-none transition-colors"
                 placeholder="Tell us about your volume, dimensions, and timeline..."
                 data-testid="textarea-message"
               />
@@ -508,7 +482,7 @@ export default function Home() {
             <div className="pt-6">
               <button
                 type="submit"
-                className="px-10 py-4 bg-[hsl(75,60%,65%)] text-[hsl(150,35%,10%)] text-xs uppercase tracking-widest font-semibold hover:bg-[hsl(75,60%,72%)] transition-colors duration-300"
+                className="px-10 py-4 bg-[hsl(75,55%,62%)] text-[hsl(150,40%,8%)] text-[11px] uppercase tracking-widest font-semibold hover:bg-[hsl(75,55%,70%)] transition-colors duration-300"
                 data-testid="button-submit"
               >
                 Submit Inquiry
@@ -518,17 +492,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FOOTER ────────────────────────────────────────────── */}
-      <footer className="bg-[hsl(150,35%,10%)] text-[hsl(150,15%,60%)] py-14 px-6 md:px-12">
+      {/* ── FOOTER ──────────────────────────────────────── */}
+      <footer className="bg-[hsl(150,38%,8%)] text-[hsl(150,12%,55%)] py-14 px-6 md:px-12">
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-4">
-            <img src={logoSrc} alt="BioPaperPack" className="h-10 w-auto object-contain opacity-90" />
-            <div>
-              <p className="text-[hsl(45,30%,85%)] font-semibold text-xs tracking-[0.2em] uppercase">BIOPAPERPACK</p>
-              <p className="text-[10px] tracking-widest uppercase text-[hsl(150,15%,45%)] mt-0.5">Precision Meets Nature</p>
-            </div>
+          <div>
+            <p className="text-[hsl(45,30%,82%)] font-bold text-sm tracking-[0.25em] uppercase">BIOPAPERPACK</p>
+            <p className="text-[10px] tracking-widest uppercase text-[hsl(150,12%,40%)] mt-1">Precision Meets Nature</p>
           </div>
-          <nav className="flex gap-8 text-xs uppercase tracking-widest">
+          <nav className="flex gap-8 text-[11px] uppercase tracking-widest">
             {[
               { label: "Ethos", id: "about" },
               { label: "Products", id: "products" },
@@ -538,13 +509,13 @@ export default function Home() {
               <button
                 key={item.id}
                 onClick={() => smoothScrollTo(item.id)}
-                className="hover:text-[hsl(45,30%,85%)] transition-colors"
+                className="hover:text-[hsl(45,30%,82%)] transition-colors"
               >
                 {item.label}
               </button>
             ))}
           </nav>
-          <p className="text-[10px] text-[hsl(150,15%,40%)] text-center md:text-right">
+          <p className="text-[10px] text-[hsl(150,12%,38%)] text-center md:text-right">
             &copy; {new Date().getFullYear()} BioPaperPack Manufacturing.<br />
             All rights reserved.
           </p>
