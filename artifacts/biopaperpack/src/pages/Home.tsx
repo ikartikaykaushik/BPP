@@ -289,8 +289,6 @@ export default function Home() {
 
       {/* ── IMAGE BREAK ─────────────────────────────────── */}
       <section className="relative h-[60vh] w-full overflow-hidden">
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent z-10" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
         <motion.img
           initial={{ scale: 1.08 }}
           whileInView={{ scale: 1 }}
@@ -305,27 +303,26 @@ export default function Home() {
       {/* ── SUSTAINABILITY ───────────────────────────────── */}
       <section id="sustainability" className="py-32 px-6 md:px-12" data-testid="section-sustainability">
         <div className="container mx-auto">
-          {/* Logo watermark placed subtly here in sustainability section */}
-          <div className="relative">
-            <div className="absolute -top-16 -right-20 w-[380px] pointer-events-none select-none opacity-[0.045]" aria-hidden="true">
-              <img
-                src={logoTransparent}
-                alt=""
-                className="w-full h-auto object-contain"
-                style={{ mixBlendMode: "multiply", filter: "saturate(0.3)" }}
-              />
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={fadeUp}
-                className="lg:col-span-5"
+                className="lg:col-span-5 relative overflow-hidden min-h-[520px]"
               >
-                <div className="aspect-[3/4] overflow-hidden bg-muted/30">
-                  <img src="/texture.png" alt="Corrugated Texture" className="w-full h-full object-cover" />
+                {/* Flute image — large and blended into background */}
+                <img
+                  src="/texture.png"
+                  alt="Corrugated Flute Texture"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
+                />
+                {/* Blend gradients on all edges */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className="absolute inset-y-0 right-0 w-2/3 bg-gradient-to-l from-background to-transparent" />
+                  <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-background to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
+                  <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-background to-transparent" />
                 </div>
               </motion.div>
 
@@ -362,7 +359,6 @@ export default function Home() {
                 </motion.div>
               </div>
             </div>
-          </div>
         </div>
       </section>
 
