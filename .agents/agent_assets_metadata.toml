@@ -1,0 +1,20 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "LMadi2qD9ddIEra_04-MC"
+uri = "file://artifacts/biopaperpack/public/hero-box.png"
+type = "image"
+title = "premium unbranded corrugated box on stone"
+
+[[generated]]
+id = "8IoP9T5-I0ZV9oHVl7VL9"
+uri = "file://artifacts/biopaperpack/public/manufacturing.png"
+type = "image"
+title = "clean modern sustainable manufacturing interior"
+
+[[generated]]
+id = "xgjx4ctvebg-zTCudrKXr"
+uri = "file://artifacts/biopaperpack/public/texture.png"
+type = "image"
+title = "macro corrugated cardboard fluting texture"
