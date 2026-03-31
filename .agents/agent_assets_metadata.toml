@@ -5,7 +5,7 @@ outputs = []
 id = "LMadi2qD9ddIEra_04-MC"
 uri = "file://artifacts/biopaperpack/public/hero-box.png"
 type = "image"
-title = "premium unbranded corrugated box on stone"
+title = "generated_image"
 
 [[generated]]
 id = "8IoP9T5-I0ZV9oHVl7VL9"

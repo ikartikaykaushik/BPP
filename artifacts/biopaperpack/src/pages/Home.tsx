@@ -303,26 +303,16 @@ export default function Home() {
       {/* ── SUSTAINABILITY ───────────────────────────────── */}
       <section id="sustainability" className="py-32 px-6 md:px-12" data-testid="section-sustainability">
         <div className="container mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={fadeUp}
-                className="lg:col-span-5 relative overflow-hidden min-h-[520px]"
+                className="lg:col-span-5"
               >
-                {/* Flute image — large and blended into background */}
-                <img
-                  src="/texture.png"
-                  alt="Corrugated Flute Texture"
-                  className="absolute inset-0 w-full h-full object-cover object-center"
-                />
-                {/* Blend gradients on all edges */}
-                <div className="absolute inset-0 pointer-events-none">
-                  <div className="absolute inset-y-0 right-0 w-2/3 bg-gradient-to-l from-background to-transparent" />
-                  <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-background to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
-                  <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-background to-transparent" />
+                <div className="aspect-[3/4] overflow-hidden bg-muted/30">
+                  <img src="/texture.png" alt="Corrugated Flute Texture" className="w-full h-full object-cover" />
                 </div>
               </motion.div>
 
