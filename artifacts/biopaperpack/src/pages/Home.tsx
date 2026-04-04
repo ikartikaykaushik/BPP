@@ -385,9 +385,9 @@ export default function Home() {
             className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14"
           >
             {[
-              { icon: Mail, label: "Email Us", value: "hello@biopaperpack.com" },
-              { icon: Phone, label: "Call Us", value: "+91 00000 00000" },
-              { icon: MapPin, label: "Location", value: "India" },
+              { icon: Mail, label: "Email Us", value: "biopaperpack@gmail.com" },
+              { icon: Phone, label: "Call Us", value: "+91 96961 60001" },
+              { icon: MapPin, label: "Location", value: "Haryana, India" },
             ].map((info, i) => (
               <motion.div key={i} variants={fadeUp} className="flex items-start gap-4">
                 <div className="w-8 h-8 rounded-full border border-[hsl(75,60%,65%)]/25 flex items-center justify-center shrink-0 mt-0.5">
@@ -482,18 +482,19 @@ export default function Home() {
           </div>
           <nav className="flex gap-8 text-[11px] uppercase tracking-widest">
             {[
-              { label: "Ethos", id: "about" },
-              { label: "Products", id: "products" },
-              { label: "Sustainability", id: "sustainability" },
-              { label: "Inquire", id: "contact" },
+              { label: "Instagram", href: "https://instagram.com/biopaperpack" },
+              { label: "LinkedIn", href: "https://linkedin.com/company/biopaperpack" },
+              { label: "WhatsApp", href: "https://wa.me/919696160001" },
             ].map((item) => (
-              <button
-                key={item.id}
-                onClick={() => smoothScrollTo(item.id)}
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hover:text-[hsl(45,30%,82%)] transition-colors"
               >
                 {item.label}
-              </button>
+              </a>
             ))}
           </nav>
           <p className="text-[10px] text-[hsl(150,12%,38%)] text-center md:text-right">
