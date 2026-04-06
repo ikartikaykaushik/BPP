@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Navigation } from "@/components/Navigation";
 import { ArrowRight, Leaf, ShieldCheck, PenTool, ArrowUpRight, Package, Mail, Phone, MapPin } from "lucide-react";
@@ -31,6 +31,33 @@ export default function Home() {
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
+
+  const [form, setForm] = useState({ name: "", email: "", company: "", product: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setForm({ name: "", email: "", company: "", product: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20 selection:text-primary">
@@ -407,12 +434,16 @@ export default function Home() {
             viewport={{ once: true }}
             variants={fadeUp}
             className="space-y-7"
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
               <div className="space-y-2">
                 <label className="text-[10px] uppercase tracking-widest text-[hsl(150,15%,55%)]">Name</label>
                 <Input
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
                   className="border-0 border-b border-[hsl(150,15%,28%)] bg-transparent rounded-none px-0 py-2 focus-visible:ring-0 focus-visible:border-[hsl(75,60%,65%)] text-[hsl(45,35%,90%)] placeholder:text-[hsl(150,15%,33%)] transition-colors"
                   placeholder="Jane Doe"
                   data-testid="input-name"
@@ -421,7 +452,11 @@ export default function Home() {
               <div className="space-y-2">
                 <label className="text-[10px] uppercase tracking-widest text-[hsl(150,15%,55%)]">Email</label>
                 <Input
+                  name="email"
                   type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
                   className="border-0 border-b border-[hsl(150,15%,28%)] bg-transparent rounded-none px-0 py-2 focus-visible:ring-0 focus-visible:border-[hsl(75,60%,65%)] text-[hsl(45,35%,90%)] placeholder:text-[hsl(150,15%,33%)] transition-colors"
                   placeholder="jane@company.com"
                   data-testid="input-email"
@@ -432,6 +467,9 @@ export default function Home() {
               <div className="space-y-2">
                 <label className="text-[10px] uppercase tracking-widest text-[hsl(150,15%,55%)]">Company</label>
                 <Input
+                  name="company"
+                  value={form.company}
+                  onChange={handleChange}
                   className="border-0 border-b border-[hsl(150,15%,28%)] bg-transparent rounded-none px-0 py-2 focus-visible:ring-0 focus-visible:border-[hsl(75,60%,65%)] text-[hsl(45,35%,90%)] placeholder:text-[hsl(150,15%,33%)] transition-colors"
                   placeholder="Your Brand Ltd."
                   data-testid="input-company"
@@ -440,11 +478,13 @@ export default function Home() {
               <div className="space-y-2">
                 <label className="text-[10px] uppercase tracking-widest text-[hsl(150,15%,55%)]">Product Interest</label>
                 <select
+                  name="product"
+                  value={form.product}
+                  onChange={handleChange}
                   className="w-full h-10 border-0 border-b border-[hsl(150,15%,28%)] bg-transparent px-0 focus:outline-none focus:border-[hsl(75,60%,65%)] appearance-none text-sm text-[hsl(45,30%,78%)] transition-colors cursor-pointer"
-                  defaultValue=""
                   data-testid="select-product"
                 >
-                  <option value="" disabled style={{ background: "hsl(150,40%,10%)" }}>Select an option</option>
+                  <option value="" style={{ background: "hsl(150,40%,10%)" }}>Select an option</option>
                   <option style={{ background: "hsl(150,40%,10%)" }}>3-Ply Solutions</option>
                   <option style={{ background: "hsl(150,40%,10%)" }}>5-Ply Solutions</option>
                   <option style={{ background: "hsl(150,40%,10%)" }}>7-Ply Solutions</option>
@@ -455,18 +495,35 @@ export default function Home() {
             <div className="space-y-2">
               <label className="text-[10px] uppercase tracking-widest text-[hsl(150,15%,55%)]">Message / Specifications</label>
               <Textarea
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                required
                 className="border-0 border-b border-[hsl(150,15%,28%)] bg-transparent rounded-none px-0 py-2 focus-visible:ring-0 focus-visible:border-[hsl(75,60%,65%)] text-[hsl(45,35%,90%)] placeholder:text-[hsl(150,15%,33%)] min-h-[100px] resize-none transition-colors"
                 placeholder="Tell us about your volume, dimensions, and timeline..."
                 data-testid="textarea-message"
               />
             </div>
+
+            {status === "success" && (
+              <p className="text-[hsl(75,60%,65%)] text-sm tracking-wide">
+                Thank you — your inquiry has been sent. We'll be in touch within 24 hours.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="text-red-400 text-sm tracking-wide">
+                Something went wrong. Please try again or email us directly.
+              </p>
+            )}
+
             <div className="pt-6">
               <button
                 type="submit"
-                className="px-10 py-4 bg-[hsl(75,55%,62%)] text-[hsl(150,40%,8%)] text-[11px] uppercase tracking-widest font-semibold hover:bg-[hsl(75,55%,70%)] transition-colors duration-300"
+                disabled={status === "sending"}
+                className="px-10 py-4 bg-[hsl(75,55%,62%)] text-[hsl(150,40%,8%)] text-[11px] uppercase tracking-widest font-semibold hover:bg-[hsl(75,55%,70%)] transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                 data-testid="button-submit"
               >
-                Submit Inquiry
+                {status === "sending" ? "Sending…" : "Submit Inquiry"}
               </button>
             </div>
           </motion.form>
