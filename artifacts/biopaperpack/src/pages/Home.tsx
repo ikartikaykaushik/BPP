@@ -199,12 +199,13 @@ export default function Home() {
               <div className="block md:hidden h-px w-full bg-border" />
               {/* Brand statement — right */}
               <div className="flex-1 flex flex-col justify-center py-14 px-10 md:py-20 md:px-16">
-                <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground font-medium mb-5">Our Identity</p>
-                <h3 className="text-2xl md:text-3xl font-serif leading-snug mb-6 text-foreground">
-                  A brand rooted in<br />nature. Built to last.
+                <p className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground/60 font-medium mb-8">Our Identity</p>
+                <div className="h-px w-8 bg-primary/30 mb-8" />
+                <h3 className="text-3xl md:text-4xl font-serif leading-[1.18] mb-8 text-foreground tracking-tight">
+                  Quiet luxury in<br />paper packaging.
                 </h3>
-                <p className="text-sm text-muted-foreground font-light leading-relaxed max-w-xs">
-                  BIOPAPERPACK was founded on the belief that premium packaging and environmental stewardship are not in opposition — they are one and the same.
+                <p className="text-[13px] text-muted-foreground font-light leading-[1.85] max-w-sm">
+                  BioPaperPack brings together modern simplicity, precision, and environmental awareness to create packaging that feels premium in every sense. We believe true luxury lies in restraint — in thoughtful design, quality workmanship, and details that speak softly yet leave a strong impression. Our packaging is created for brands that value timeless presentation with purpose.
                 </p>
               </div>
             </div>
