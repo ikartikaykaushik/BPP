@@ -24,7 +24,7 @@ export function Navigation() {
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.9, ease: "easeInOut" }}
+      transition={{ duration: 0.9 }}
     >
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
         <button
