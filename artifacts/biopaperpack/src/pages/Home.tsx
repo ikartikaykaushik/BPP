@@ -51,10 +51,10 @@ export default function Home() {
         className="relative min-h-[100svh] overflow-hidden flex flex-col justify-center"
         data-testid="section-hero"
       >
-        {/* Parallax photo — right side */}
+        {/* Parallax photo — right side, hidden on mobile */}
         <motion.div
           style={{ y: imgY }}
-          className="absolute right-0 top-0 w-full md:w-[58vw] h-full z-0"
+          className="hidden md:block absolute right-0 top-0 md:w-[58vw] h-full z-0"
         >
           <div className="absolute inset-0 z-10 pointer-events-none">
             <div className="absolute inset-y-0 left-0 w-[75%] bg-gradient-to-r from-background via-background/75 to-transparent" />
@@ -237,16 +237,14 @@ export default function Home() {
             className="border border-border overflow-hidden"
           >
             <div className="flex flex-col md:flex-row items-center">
-              {/* Logo block — left/center */}
-              <div className="flex-1 flex items-center justify-center py-16 px-10 md:py-20 md:px-16 bg-[hsl(80,55%,94%)] relative overflow-hidden">
-                {/* Subtle radial glow behind logo */}
-                <div className="absolute inset-0 bg-radial from-[hsl(80,60%,88%)] to-transparent opacity-60 pointer-events-none" />
+              {/* Logo block — left/center, fills edge to edge */}
+              <div className="flex-1 bg-[hsl(80,55%,94%)] relative overflow-hidden min-h-[280px] md:min-h-[360px]">
                 <motion.img
                   src={logoTransparent}
                   alt="BioPaperPack"
-                  className="relative z-10 w-56 md:w-72 h-auto object-contain drop-shadow-sm"
-                  initial={{ opacity: 0, scale: 0.92 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  className="absolute inset-0 w-full h-full object-cover scale-[1.55]"
+                  initial={{ opacity: 0, scale: 1.45 }}
+                  whileInView={{ opacity: 1, scale: 1.55 }}
                   transition={{ duration: 0.9 }}
                   viewport={{ once: true }}
                 />
