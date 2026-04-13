@@ -237,14 +237,14 @@ export default function Home() {
             className="border border-border overflow-hidden"
           >
             <div className="flex flex-col md:flex-row items-center">
-              {/* Logo block — left/center, fills edge to edge */}
-              <div className="flex-1 bg-[hsl(80,55%,94%)] relative overflow-hidden min-h-[280px] md:min-h-[360px]">
+              {/* Logo block — left/center, full logo visible */}
+              <div className="flex-1 bg-[hsl(80,55%,94%)] relative flex items-center justify-center min-h-[280px] md:min-h-[360px] p-8 md:p-12">
                 <motion.img
                   src={logoTransparent}
                   alt="BioPaperPack"
-                  className="absolute inset-0 w-full h-full object-cover scale-[1.55]"
-                  initial={{ opacity: 0, scale: 1.45 }}
-                  whileInView={{ opacity: 1, scale: 1.55 }}
+                  className="w-full h-full object-contain"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.9 }}
                   viewport={{ once: true }}
                 />
